@@ -19,15 +19,18 @@ data = []
 time_interval = 30
 stopsignal = False
 while not stopsignal:
-	with mic as source:
-		audio = r.listen(source)
-	text = r.recognize_google(audio)
-	print(text)
-	text_list = text.split(" ")
-	data += text_list
-	time_2 = time.time()
-	if time_2 - time_1 >= time_interval:
-		stopsignal = True
+	try:
+		with mic as source:
+			audio = r.listen(source)
+		text = r.recognize_google(audio)
+		print(text)
+		text_list = text.split(" ")
+		data += text_list
+		time_2 = time.time()
+		if time_2 - time_1 >= time_interval:
+			stopsignal = True
+	except:
+		pass 
 
 
 filler_words = {'like','um', 'umm', 'totally', 'hmm', 'hmmm', 'literally', 'really', 'uh', 'actually', 'so'}
