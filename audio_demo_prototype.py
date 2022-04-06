@@ -38,7 +38,7 @@ for i in range(len(data)):
 	else:
 		output[data[i]] += 1
 
-stopwords = ['to', 'the', 'a', 'from', 'I', 'that', 'me', 'do', 'and', 'is', 'my', 'for', 'of', 'it']
+stopwords = ['to', 'the', 'a', 'from', 'I', 'that', 'me', 'do', 'and', 'is', 'my', 'for', 'of', 'it', 'if', 'in', 'we', 'but', 'you']
 for word in stopwords:
 	try:
 		del output[word]
