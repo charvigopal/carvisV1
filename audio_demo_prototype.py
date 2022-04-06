@@ -21,9 +21,9 @@ stopsignal = False
 while not stopsignal:
 	print('listening...')
 	with mic as source:
-		print('before audio')
+		print('keep speaking...')
 		audio = r.listen(source)
-	print('after audio')
+	print('processing...')
 	text = r.recognize_google(audio)
 	print(text)
 	text_list = text.split(" ")
