@@ -46,7 +46,7 @@ for i in range(len(data)):
 	else:
 		output[data[i]] += 1
 
-stopwords = ['to', 'the', 'a', 'from', 'I', 'that', 'me', 'do', 'and', 'is', 'my', 'for', 'of', 'it', 'if', 'in', 'we', 'but', 'you', 'are', 'have', 'not', 'it\'s', 'I\'m', 'am', 'at', 'so']
+stopwords = ['to', 'the', 'a', 'from', 'I', 'that', 'me', 'do', 'and', 'is', 'my', 'for', 'of', 'it', 'if', 'in', 'we', 'but', 'you', 'are', 'have', 'not', 'it\'s', 'I\'m', 'am', 'at', 'so', 'will', 'be']
 for word in stopwords:
 	try:
 		del output[word]
