@@ -19,19 +19,18 @@ data = []
 time_interval = 120
 stopsignal = False
 while not stopsignal:
-	try:
-		print('listening...')
-		with mic as source:
-			audio = r.listen(source)
-		text = r.recognize_google(audio)
-		print(text)
-		text_list = text.split(" ")
-		data += text_list
-		time_2 = time.time()
-		if time_2 - time_1 >= time_interval:
-			stopsignal = True
-	except:
-		pass 
+	print('listening...')
+	with mic as source:
+		print('before audio')
+		audio = r.listen(source)
+	print('after audio')
+	text = r.recognize_google(audio)
+	print(text)
+	text_list = text.split(" ")
+	data += text_list
+	time_2 = time.time()
+	if time_2 - time_1 >= time_interval:
+		stopsignal = True
 
 output = {}
 freq_dict = Counter(data)
