@@ -38,7 +38,7 @@ for i in range(len(data)):
 	else:
 		output[data[i]] += 1
 
-stopwords = ['to', 'the', 'a', 'from', 'I', 'that', 'me', 'do', 'and', 'is', 'my', 'for', 'of', 'it', 'if', 'in', 'we', 'but', 'you', 'are', 'have', 'not', 'it\'s', 'I\'m', 'am', 'at']
+stopwords = ['to', 'the', 'a', 'from', 'I', 'that', 'me', 'do', 'and', 'is', 'my', 'for', 'of', 'it', 'if', 'in', 'we', 'but', 'you', 'are', 'have', 'not', 'it\'s', 'I\'m', 'am', 'at', 'so']
 for word in stopwords:
 	try:
 		del output[word]
@@ -60,7 +60,7 @@ plt.show()
 
 ### Filler Words ### 
 
-filler_words = {'like','um', 'umm', 'totally', 'hmm', 'hmmm', 'literally', 'really', 'uh', 'actually'}
+filler_words = {'like','um', 'umm', 'totally', 'hmm', 'hmmm', 'literally', 'really', 'uh', 'actually', 'so'}
 filler_output = dict()
 freq_dict = Counter(data)
 for i in range(len(data)):

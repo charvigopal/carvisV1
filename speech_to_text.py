@@ -30,7 +30,7 @@ while not stopsignal:
 		stopsignal = True
 
 
-filler_words = {'like','um', 'umm', 'totally', 'hmm', 'hmmm', 'literally', 'really', 'uh', 'actually'}
+filler_words = {'like','um', 'umm', 'totally', 'hmm', 'hmmm', 'literally', 'really', 'uh', 'actually', 'so'}
 filler_output = dict()
 freq_dict = Counter(data)
 for i in range(len(data)):
