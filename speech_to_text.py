@@ -1,7 +1,10 @@
-# speech_to_text.py
 import speech_recognition as sr
 import time
 from collections import Counter
+import matplotlib.pyplot as plt
+
+
+# plt.style.use('seaborn-dark-palette')
 
 r = sr.Recognizer()
 mic = sr.Microphone()
@@ -13,7 +16,7 @@ mic = sr.Microphone()
 #     audio = r.listen(source)
 time_1 = time.time()
 data = []
-time_interval = 90
+time_interval = 30
 stopsignal = False
 while not stopsignal:
 	with mic as source:
@@ -36,10 +39,19 @@ for i in range(len(data)):
 	elif data[i] in filler_words:
 		filler_output[data[i]] += 1
 
-print("Your word frequency:", freq_dict)
-print("Filler words in your speech:", filler_output)
+# print("Your word frequency:", freq_dict)
+# print("Filler words in your speech:", filler_output)
 
+words_filler_key = list(filler_output.keys())
+words_filler_vals = list(filler_output.values())
 
+fig =  plt.figure(figsize = (10, 5))
 
+plt.bar(words_filler_key, words_filler_vals, color ='maroon',
+        width = 0.4)
 
+plt.xlabel("Filler words spoken")
+plt.ylabel("No. of times spoken")
+plt.title("Filler words used in Speech:")
+plt.show()
 
