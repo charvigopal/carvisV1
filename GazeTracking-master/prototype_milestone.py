@@ -6,11 +6,14 @@ Check the README.md for complete documentation.
 import cv2
 from gaze_tracking import GazeTracking
 from playsound import playsound
+import time
+from threading import Thread
 
 gaze = GazeTracking()
 webcam = cv2.VideoCapture(0)
 
-playsound('airplane_ding.wav')
+def playSound():
+    playsound('airplane_ding.wav')
 
 while True:
     # We get a new frame from the webcam
@@ -28,11 +31,11 @@ while True:
     elif gaze.is_right():
         text = "<-- "
         cv2.putText(frame, text, (600, 60), cv2.FONT_HERSHEY_DUPLEX, 1.6, (147, 58, 31), 2)
-        playsound('airplane_ding.wav')
+        Thread(target= playSound).start()
     elif gaze.is_left():
         text = "-->"
         cv2.putText(frame, text, (90, 60), cv2.FONT_HERSHEY_DUPLEX, 1.6, (147, 58, 31), 2)
-        playsound('airplane_ding.wav')
+        Thread(target= playSound).start()
     elif gaze.is_center():
         text= "looking center"
         cv2.putText(frame, text, (400, 60), cv2.FONT_HERSHEY_DUPLEX, 1.6, (147, 58, 31), 2)
