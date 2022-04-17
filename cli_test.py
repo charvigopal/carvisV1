@@ -1,3 +1,4 @@
 from subprocess import Popen
+# from GazeTracking_master import prototype_milestone
 
-Popen('python3 GazeTracking-master/prototype_milestone.py')
+Popen('GazeTracking_master/prototype_milestone.py')
