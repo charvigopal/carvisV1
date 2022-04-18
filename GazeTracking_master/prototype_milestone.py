@@ -19,7 +19,7 @@ time_start = time.time()
 def playSound():
     playsound('airplane_ding.wav')
 
-horizontal_frequencies = {'left': 0, 'right': 0, 'center': 0}
+horizontal_frequencies = {'left': 0, 'right': 0, 'center': 0, 'up': 0, 'down': 0}
 
 while True:
     # We get a new frame from the webcam
@@ -35,6 +35,7 @@ while True:
         pass 
         # text = "Blinking"
     else:
+        cv2.putText(frame, str(gaze.vertical_ratio()), (600, 120), cv2.FONT_HERSHEY_DUPLEX, 1.6, (147, 58, 31), 2)
         if gaze.is_right():
             text = "<-- "
             cv2.putText(frame, text, (600, 60), cv2.FONT_HERSHEY_DUPLEX, 1.6, (147, 58, 31), 2)
@@ -45,10 +46,20 @@ while True:
             cv2.putText(frame, text, (90, 60), cv2.FONT_HERSHEY_DUPLEX, 1.6, (147, 58, 31), 2)
             Thread(target= playSound).start()
             horizontal_frequencies['left'] += 1
+        if gaze.is_up():
+            text= ""
+            cv2.putText(frame, text, (400, 60), cv2.FONT_HERSHEY_DUPLEX, 1.6, (147, 58, 31), 2)
+            Thread(target= playSound).start()
+            horizontal_frequencies['up'] += 1
+        if gaze.is_down():
+            text= "^"
+            cv2.putText(frame, text, (400, 60), cv2.FONT_HERSHEY_DUPLEX, 1.6, (147, 58, 31), 2)
+            Thread(target= playSound).start()
+            horizontal_frequencies['down'] += 1
         if gaze.is_center():
             text= "looking center"
             cv2.putText(frame, text, (400, 60), cv2.FONT_HERSHEY_DUPLEX, 1.6, (147, 58, 31), 2)
-            horizontal_frequencies['center'] += 1
+            horizontal_frequencies['center at camera'] += 1
 
     # left_pupil = gaze.pupil_left_coords()
     # right_pupil = gaze.pupil_right_coords()
