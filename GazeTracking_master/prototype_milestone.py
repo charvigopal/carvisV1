@@ -10,12 +10,16 @@ from gaze_tracking import GazeTracking
 from playsound import playsound
 import time
 from threading import Thread
+import matplotlib.pyplot as plt
 
 gaze = GazeTracking()
 webcam = cv2.VideoCapture(0)
+time_start = time.time()
 
 def playSound():
     playsound('airplane_ding.wav')
+
+horizontal_frequencies = {'left': 0, 'right': 0, 'center': 0}
 
 while True:
     # We get a new frame from the webcam
@@ -30,17 +34,21 @@ while True:
     if gaze.is_blinking():
         pass 
         # text = "Blinking"
-    elif gaze.is_right():
-        text = "<-- "
-        cv2.putText(frame, text, (600, 60), cv2.FONT_HERSHEY_DUPLEX, 1.6, (147, 58, 31), 2)
-        Thread(target= playSound).start()
-    elif gaze.is_left():
-        text = "-->"
-        cv2.putText(frame, text, (90, 60), cv2.FONT_HERSHEY_DUPLEX, 1.6, (147, 58, 31), 2)
-        Thread(target= playSound).start()
-    elif gaze.is_center():
-        text= "looking center"
-        cv2.putText(frame, text, (400, 60), cv2.FONT_HERSHEY_DUPLEX, 1.6, (147, 58, 31), 2)
+    else:
+        if gaze.is_right():
+            text = "<-- "
+            cv2.putText(frame, text, (600, 60), cv2.FONT_HERSHEY_DUPLEX, 1.6, (147, 58, 31), 2)
+            Thread(target= playSound).start()
+            horizontal_frequencies['right'] += 1
+        if gaze.is_left():
+            text = "-->"
+            cv2.putText(frame, text, (90, 60), cv2.FONT_HERSHEY_DUPLEX, 1.6, (147, 58, 31), 2)
+            Thread(target= playSound).start()
+            horizontal_frequencies['left'] += 1
+        if gaze.is_center():
+            text= "looking center"
+            cv2.putText(frame, text, (400, 60), cv2.FONT_HERSHEY_DUPLEX, 1.6, (147, 58, 31), 2)
+            horizontal_frequencies['center'] += 1
 
     # left_pupil = gaze.pupil_left_coords()
     # right_pupil = gaze.pupil_right_coords()
@@ -52,5 +60,16 @@ while True:
     if cv2.waitKey(1) == 27:
         break
    
+time_end = time.time()
 webcam.release()
 cv2.destroyAllWindows()
+
+fig =  plt.figure(1, figsize = (10, 5))
+
+plt.bar(horizontal_frequencies.keys(), horizontal_frequencies.values(), color ='blue',
+        width = 0.4)
+
+plt.xlabel("Direction")
+plt.ylabel("Frequency")
+plt.title("Frequency of Looking in Each Horizontal Direction")
+plt.show()
