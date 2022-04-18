@@ -44,9 +44,10 @@ print("---------------------------------")
 
 transcribed_audio_file_name = "demo.wav"
 text_file_name = "transcription"+str(new_now)+".txt"
-# zoom_video_file_name = "togo.mp4"
-# audioclip = AudioFileClip(zoom_video_file_name)
-# audioclip.write_audiofile(transcribed_audio_file_name)
+# text_file_name = "transcription" + str(111652) + ".txt"
+zoom_video_file_name = "togo.mp4"
+audioclip = AudioFileClip(zoom_video_file_name)
+audioclip.write_audiofile(transcribed_audio_file_name)
 with contextlib.closing(wave.open(transcribed_audio_file_name,'r')) as f:
 	frames = f.getnframes()
 	rate = f.getframerate()
@@ -259,7 +260,7 @@ plt.savefig("CommonWords.pdf")
 
 # ### Filler Words ### 
 
-filler_words = {'like','um', 'umm', 'totally', 'hmm', 'hmmm', 'literally', 'really', 'uh', 'actually', 'so'}
+filler_words = {'like','um', 'umm', 'totally', 'hmm', 'hmmm', 'literally', 'really', 'uh', 'actually', 'so', 'very', 'simply'}
 filler_output = dict()
 freq_dict = Counter(data)
 for i in range(len(data)):
@@ -287,17 +288,22 @@ plt.savefig("FillerWords.pdf")
 
 
 from PyPDF2 import PdfFileMerger
-pdfs = [output_filename, 'CommonWords.pdf','UserAmplitudePlot.pdf', 'SentimentPlot.pdf', 'FillerWords.pdf']
-
+pdfs = ['CommonWords.pdf','UserAmplitudePlot.pdf', 'SentimentPlot.pdf', 'FillerWords.pdf', output_filename]
 merger = PdfFileMerger()
 for pdf in pdfs:
 	merger.append(pdf)
-report_name = "Carvis Report" + new_now + ".pdf"
+
+print("............")
+print("Preparing your Report!")
+print("Please type your first name:" )
+user_name = str(input())
+
+report_name = user_name + new_now + ".pdf"
+
 merger.write(report_name)
 # merger.write("Carvis Report1.pdf")
 merger.close()
-print("............")
-print("Preparing your Report!")
+
 # path = 'Carvis Report1.pdf'
 path = report_name
 webbrowser.open_new(path)

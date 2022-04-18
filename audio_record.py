@@ -131,6 +131,7 @@ def record_to_file(path):
     wf.close()
 
 if __name__ == '__main__':
-    print("Please speak a word into the microphone:")
+    print("Please start speaking into the microphone:")
     record_to_file('demo.wav')
     print("Done! - result written to demo.wav")
+    print("You may now run the command: python videotranscript.py")
