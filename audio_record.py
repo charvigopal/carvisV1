@@ -12,7 +12,9 @@ THRESHOLD = 500
 CHUNK_SIZE = 1024
 FORMAT = pyaudio.paInt16
 RATE = 44100
-time_interval = 8
+print("Hi there! Welcome to Carvis!")
+print("Please enter the time interval for the recording (in seconds): ")
+time_interval = float(input())
 
 def is_silent(snd_data):
     "Returns 'True' if below the 'silent' threshold"
@@ -96,7 +98,7 @@ def record():
         elif not silent and not snd_started:
             snd_started = True
 
-        if snd_started and num_silent > 12.5 * time_interval:
+        if snd_started and num_silent > 10* time_interval:
             break
 
     sample_width = p.get_sample_size(FORMAT)
@@ -125,6 +127,6 @@ def record_to_file(path):
     wf.close()
 
 if __name__ == '__main__':
-    print("Please speak a word into the microphone")
+    print("Please speak a word into the microphone:")
     record_to_file('demo.wav')
-    print("Done - result written to demo.wav")
+    print("Done! - result written to demo.wav")
