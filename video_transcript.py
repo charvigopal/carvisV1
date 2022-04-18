@@ -9,6 +9,12 @@ from reportlab.pdfgen import canvas
 import random
 import webbrowser
 from collections import Counter
+from datetime import datetime
+
+
+now = datetime.now()
+new_now = now.strftime("%H%M%S")
+print(new_now)
 
 print("Carvis Tips and Message Board!")
 print("----------------------------------")
@@ -179,7 +185,7 @@ emotion_keys = [x for x in emotion_dict]
 emotion_values = [emotion_dict[x] for x in emotion_keys]
 
 fig =  plt.figure(3, figsize = (10, 5))
-plt.bar(emotion_keys, emotion_values, color ='maroon', width = 0.4)
+plt.bar(emotion_keys, emotion_values, color ='#984ea3', width = 0.4)
 plt.xlabel("Sentiment Record")
 plt.ylabel("Probability Score")
 plt.title("Sentiment transcribed_audio_file_name Plot of your Presentation")
@@ -258,7 +264,6 @@ plt.savefig("FillerWords.pdf")
 
 
 
-
 from PyPDF2 import PdfFileMerger
 pdfs = ['TranscriptionReport.pdf', 'CommonWords.pdf','UserAmplitudePlot.pdf', 'SentimentPlot.pdf', 'FillerWords.pdf']
 
@@ -271,6 +276,7 @@ print("............")
 print("Preparing your Report!")
 path = 'Carvis Report1.pdf'
 webbrowser.open_new(path)
+
 
 
 
