@@ -35,10 +35,10 @@ print(r_indices_list[2])
 
 print("---------------------------------")
 
-transcribed_audio_file_name = "transcribed_speech.wav"
-zoom_video_file_name = "togo.mp4"
-audioclip = AudioFileClip(zoom_video_file_name)
-audioclip.write_audiofile(transcribed_audio_file_name)
+transcribed_audio_file_name = "demo.wav"
+# zoom_video_file_name = "togo.mp4"
+# audioclip = AudioFileClip(zoom_video_file_name)
+# audioclip.write_audiofile(transcribed_audio_file_name)
 with contextlib.closing(wave.open(transcribed_audio_file_name,'r')) as f:
 	frames = f.getnframes()
 	rate = f.getframerate()
