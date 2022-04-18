@@ -20,6 +20,7 @@ def playSound():
     playsound('airplane_ding.wav')
 
 horizontal_frequencies = {'left': 0, 'right': 0, 'center at camera': 0, 'up': 0, 'down': 0}
+total = 0
 
 while True:
     # We get a new frame from the webcam
@@ -73,10 +74,13 @@ cv2.destroyAllWindows()
 
 fig =  plt.figure(1, figsize = (10, 5))
 
+for freq in horizontal_frequencies:
+    horizontal_frequencies[freq] = (horizontal_frequencies[freq]/total) * (time_end - time_start)
+
 plt.bar(horizontal_frequencies.keys(), horizontal_frequencies.values(), color ='blue',
         width = 0.4)
 
 plt.xlabel("Direction")
-plt.ylabel("Frequency")
-plt.title("Frequency of Looking in Each Horizontal Direction")
+plt.ylabel("Time (s)")
+plt.title("Time Looked in Each Direction")
 plt.show()
