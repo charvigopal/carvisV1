@@ -35,7 +35,7 @@ while True:
         pass 
         # text = "Blinking"
     else:
-        cv2.putText(frame, str(gaze.vertical_ratio()), (600, 120), cv2.FONT_HERSHEY_DUPLEX, 1.6, (147, 58, 31), 2)
+        # cv2.putText(frame, str(gaze.vertical_ratio()), (600, 120), cv2.FONT_HERSHEY_DUPLEX, 1.6, (147, 58, 31), 2)
         if gaze.is_right():
             text = "<-- "
             cv2.putText(frame, text, (600, 60), cv2.FONT_HERSHEY_DUPLEX, 1.6, (147, 58, 31), 2)
