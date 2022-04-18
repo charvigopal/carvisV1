@@ -5,12 +5,14 @@ from struct import pack
 import pyaudio
 import wave
 import time
+import speech_recognition as sr
 
 
 THRESHOLD = 500
 CHUNK_SIZE = 1024
 FORMAT = pyaudio.paInt16
 RATE = 44100
+time_interval = 8
 
 def is_silent(snd_data):
     "Returns 'True' if below the 'silent' threshold"
@@ -72,6 +74,8 @@ def record():
     stream = p.open(format=FORMAT, channels=1, rate=RATE,
         input=True, output=True,
         frames_per_buffer=CHUNK_SIZE)
+    # r_val = sr.Recognizer()
+    # print(r_val.recognize_google(p))
 
     num_silent = 0
     snd_started = False
@@ -92,7 +96,7 @@ def record():
         elif not silent and not snd_started:
             snd_started = True
 
-        if snd_started and num_silent > 100:
+        if snd_started and num_silent > 12.5 * time_interval:
             break
 
     sample_width = p.get_sample_size(FORMAT)
@@ -109,6 +113,9 @@ def record_to_file(path):
     "Records from the microphone and outputs the resulting data to 'path'"
     sample_width, data = record()
     data = pack('<' + ('h'*len(data)), *data)
+
+
+
 
     wf = wave.open(path, 'wb')
     wf.setnchannels(1)
