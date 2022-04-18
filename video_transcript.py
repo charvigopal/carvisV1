@@ -180,10 +180,10 @@ emotion_values = [emotion_dict[x] for x in emotion_keys]
 
 fig =  plt.figure(3, figsize = (10, 5))
 plt.bar(emotion_keys, emotion_values, color ='maroon', width = 0.4)
-plt.xlabel("Emotion Record")
+plt.xlabel("Sentiment Record")
 plt.ylabel("Probability Score")
-plt.title("Emotion Plot of your Presentation")
-plt.savefig("EmotionPlot.pdf")
+plt.title("Sentiment transcribed_audio_file_name Plot of your Presentation")
+plt.savefig("SentimentPlot.pdf")
 
 
 
@@ -260,7 +260,7 @@ plt.savefig("FillerWords.pdf")
 
 
 from PyPDF2 import PdfFileMerger
-pdfs = ['TranscriptionReport.pdf', 'CommonWords.pdf','UserAmplitudePlot.pdf', 'EmotionPlot.pdf', 'FillerWords.pdf']
+pdfs = ['TranscriptionReport.pdf', 'CommonWords.pdf','UserAmplitudePlot.pdf', 'SentimentPlot.pdf', 'FillerWords.pdf']
 
 merger = PdfFileMerger()
 for pdf in pdfs:
