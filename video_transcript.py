@@ -10,13 +10,18 @@ import random
 import webbrowser
 from collections import Counter
 from datetime import datetime
-
+from scipy.io import wavfile
+import gtts
+from playsound import playsound
 
 now = datetime.now()
 new_now = now.strftime("%H%M%S")
-print(new_now)
+# print(new_now)
 
 print("Carvis Tips and Message Board!")
+tts = gtts.gTTS("Carvis Tips and Message Board!")
+tts.save("message_mode.mp3")
+playsound("message_mode.mp3")
 print("----------------------------------")
 m1 = "Focus on delivering your message."
 m2 = "Smile. Be relaxed, poised, and at ease on the outside, regardless of how you feel internally. Acting relaxed can help make you relaxed."
@@ -24,18 +29,21 @@ m3 = "Keep presenting! Your anxieties decrease the more presentations you give."
 m4 = "Consider using a short icebreaker activity."
 m5 = "A tasteful, humorous commentary can be effective if related to the topic."
 m6 = "Explain the purpose of your presentation in one sentence that is free of professional jargon and emphasizes what participants will gain."
-m = [m1, m2, m3, m4, m5, m6]
+m7 = "Don't be compelled to fill pauses with um, ah, you know, and like. These common fillers can diminish your credibility."
+m = [m1, m2, m3, m4, m5, m6, m7]
 r_indices = set()
-while len(r_indices) < 3:
-	r_indices.add(random.randrange(0, 5))
+while len(r_indices) < 4:
+	r_indices.add(random.randrange(0, 6))
 r_indices_list = [m[x] for x in r_indices]
 print(r_indices_list[0])
 print(r_indices_list[1])
 print(r_indices_list[2])
+print(r_indices_list[3])
 
 print("---------------------------------")
 
 transcribed_audio_file_name = "demo.wav"
+text_file_name = "transcription"+str(new_now)+".txt"
 # zoom_video_file_name = "togo.mp4"
 # audioclip = AudioFileClip(zoom_video_file_name)
 # audioclip.write_audiofile(transcribed_audio_file_name)
@@ -48,10 +56,18 @@ r = sr.Recognizer()
 for i in range(0, total_duration):
 	with sr.AudioFile(transcribed_audio_file_name) as source:
 		audio = r.record(source, offset=i*60, duration=60)
-	f = open("transcription.txt", "a")
+	# f = open("transcription.txt", "a")
+	f = open(text_file_name, "a")
 	f.write(r.recognize_google(audio))
 	f.write(" ")
 f.close()
+
+# sample_rate, data = wavfile.read('transcribed_speech.wav')
+# time_duration = len(data)/sample_rate
+
+
+
+
 
 
 # import language_tool_python
@@ -67,6 +83,8 @@ f.close()
 # path = r"./transcribed_speech.wav" 
 # print(mysp.myspsyl(p, path))  #Gives the number of syllables
 # print(mysp.mysppaus(p, path)) #Gives the no. of pauses
+
+
 
 
 
@@ -119,8 +137,10 @@ def text_to_pdf(text, filename):
     pdf.output(filename, 'F')
 
 
-input_filename = 'transcription.txt'
-output_filename = 'TranscriptionReport.pdf'
+# input_filename = 'transcription.txt'
+input_filename = text_file_name
+output_filename = 'TranscriptionReport' + new_now + '.pdf'
+# output_filename = 'TranscriptionReport.pdf'
 file = open(input_filename)
 text = file.read()
 file.close()
@@ -166,12 +186,14 @@ def visualize(path: str):
 
 visualize("transcribed_speech.wav")
 
-textfile = open("transcription.txt", 'r')
+textfile = open(text_file_name, 'r')
+# textfile = open("transcription.txt", 'r')
 # print(type(textfile))
 process_data =  [(line.strip()).split() for line in textfile]
 # data = [line.split(',') for line in textfile.readlines()]
 # data = textfile.split(',')
 data = process_data[0]
+
 
 text_str = ""
 for each_word in data:
@@ -265,16 +287,19 @@ plt.savefig("FillerWords.pdf")
 
 
 from PyPDF2 import PdfFileMerger
-pdfs = ['TranscriptionReport.pdf', 'CommonWords.pdf','UserAmplitudePlot.pdf', 'SentimentPlot.pdf', 'FillerWords.pdf']
+pdfs = [output_filename, 'CommonWords.pdf','UserAmplitudePlot.pdf', 'SentimentPlot.pdf', 'FillerWords.pdf']
 
 merger = PdfFileMerger()
 for pdf in pdfs:
 	merger.append(pdf)
-merger.write("Carvis Report1.pdf")
+report_name = "Carvis Report" + new_now + ".pdf"
+merger.write(report_name)
+# merger.write("Carvis Report1.pdf")
 merger.close()
 print("............")
 print("Preparing your Report!")
-path = 'Carvis Report1.pdf'
+# path = 'Carvis Report1.pdf'
+path = report_name
 webbrowser.open_new(path)
 
 
