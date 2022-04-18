@@ -54,13 +54,13 @@ for i in range(0, total_duration):
 f.close()
 
 
-import language_tool_python
-tool = language_tool_python.LanguageTool('en-US')
-g = open("transcription.txt", "r") 
-text =tool.check(g)
-# get the matches
-matches = tool.check(text)
-g.close()
+# import language_tool_python
+# tool = language_tool_python.LanguageTool('en-US')
+# g = open("transcription.txt", "r") 
+# text =tool.check(g)
+# # get the matches
+# matches = tool.check(text)
+# g.close()
 
 # import myprosody as mysp
 # p = "transcribed_speech.wav"
