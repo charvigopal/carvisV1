@@ -36,6 +36,7 @@ print(r_indices_list[2])
 print("---------------------------------")
 
 transcribed_audio_file_name = "demo.wav"
+transcribed_audio_file_name = "transcribed_speech.wav"
 # zoom_video_file_name = "togo.mp4"
 # audioclip = AudioFileClip(zoom_video_file_name)
 # audioclip.write_audiofile(transcribed_audio_file_name)
@@ -188,7 +189,7 @@ fig =  plt.figure(3, figsize = (10, 5))
 plt.bar(emotion_keys, emotion_values, color ='#984ea3', width = 0.4)
 plt.xlabel("Sentiment Record")
 plt.ylabel("Probability Score")
-plt.title("Sentiment transcribed_audio_file_name Plot of your Presentation")
+plt.title("Sentiment plot of your Presentation")
 plt.savefig("SentimentPlot.pdf")
 
 
