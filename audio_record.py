@@ -6,16 +6,20 @@ import pyaudio
 import wave
 import time
 import speech_recognition as sr
+import gtts
+from playsound import playsound
 
 
 THRESHOLD = 500
 CHUNK_SIZE = 1024
 FORMAT = pyaudio.paInt16
 RATE = 44100
-print("Hi there! Welcome to Carvis!")
+print("Hi there! Welcome to Carvis record mode!")
+tts = gtts.gTTS("Hi there! Welcome to Carvis record mode!")
+tts.save("record_mode.mp3")
+playsound("record_mode.mp3")
 print("Please enter the time interval for the recording (in seconds): ")
 time_interval = float(input())
-
 def is_silent(snd_data):
     "Returns 'True' if below the 'silent' threshold"
     return max(snd_data) < THRESHOLD
