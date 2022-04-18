@@ -36,7 +36,6 @@ print(r_indices_list[2])
 print("---------------------------------")
 
 transcribed_audio_file_name = "demo.wav"
-transcribed_audio_file_name = "transcribed_speech.wav"
 # zoom_video_file_name = "togo.mp4"
 # audioclip = AudioFileClip(zoom_video_file_name)
 # audioclip.write_audiofile(transcribed_audio_file_name)
