@@ -45,9 +45,9 @@ print("---------------------------------")
 transcribed_audio_file_name = "demo.wav"
 text_file_name = "transcription"+str(new_now)+".txt"
 # text_file_name = "transcription" + str(111652) + ".txt"
-zoom_video_file_name = "togo.mp4"
-audioclip = AudioFileClip(zoom_video_file_name)
-audioclip.write_audiofile(transcribed_audio_file_name)
+# zoom_video_file_name = "zoom_call.mp4"
+# audioclip = AudioFileClip(zoom_video_file_name)
+# audioclip.write_audiofile(transcribed_audio_file_name)
 with contextlib.closing(wave.open(transcribed_audio_file_name,'r')) as f:
 	frames = f.getnframes()
 	rate = f.getframerate()
@@ -185,7 +185,9 @@ def visualize(path: str):
     # the plot using
     # plt.savefig('filename')
 
-visualize("transcribed_speech.wav")
+# visualize("transcribed_speech.wav")
+visualize('demo.wav')
+# visualize("timurban.wav")
 
 textfile = open(text_file_name, 'r')
 # textfile = open("transcription.txt", 'r')
@@ -215,7 +217,8 @@ plt.title("Sentiment plot of your Presentation")
 plt.savefig("SentimentPlot.pdf")
 
 
-
+# import textstat 
+# print("Dale Chall readability score", textstat.dale_chall_readability_score(data))
 
 
 
@@ -230,7 +233,7 @@ for i in range(len(data)):
 	else:
 		output[data[i]] += 1
 
-stopwords = ['to', 'the', 'a', 'from', 'I', 'that', 'me', 'do', 'and', 'is', 'my', 'for', 'of', 'it', 'if', 'in', 'we', 'but', 'you', 'are', 'have', 'not', 'it\'s', 'I\'m', 'am', 'at', 'so', 'will', 'be']
+stopwords = ['to', 'the', 'a', 'from', 'I', 'that', 'me', 'do', 'and', 'is', 'my', 'for', 'of', 'it', 'if', 'in', 'we', 'but', 'you', 'are', 'have', 'not', 'it\'s', 'I\'m', 'am', 'at', 'so', 'will', 'be', 'an', 'that']
 for word in stopwords:
 	try:
 		del output[word]
@@ -260,7 +263,7 @@ plt.savefig("CommonWords.pdf")
 
 # ### Filler Words ### 
 
-filler_words = {'like','um', 'umm', 'totally', 'hmm', 'hmmm', 'literally', 'really', 'uh', 'actually', 'so', 'very', 'simply'}
+filler_words = {'like','um', 'umm', 'totally', 'hmm', 'hmmm', 'literally', 'really', 'uh', 'actually', 'so', 'very', 'simply', 'slightly', 'basically', 'just'}
 filler_output = dict()
 freq_dict = Counter(data)
 for i in range(len(data)):
@@ -282,6 +285,9 @@ plt.ylabel("No. of times spoken")
 plt.title("Filler words used in Speech:")
 # plt.show()
 plt.savefig("FillerWords.pdf")
+
+
+
 
 
 
