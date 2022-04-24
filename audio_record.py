@@ -18,6 +18,7 @@ print("Hi there! Welcome to Carvis record mode!")
 tts = gtts.gTTS("Hi there! Welcome to Carvis record mode!")
 tts.save("record_mode.mp3")
 playsound("record_mode.mp3")
+print("You can talk about any topic of your choice for the time interval you pick!")
 print("Please enter the time interval for the recording (in seconds): ")
 time_interval = float(input())
 def is_silent(snd_data):
@@ -102,7 +103,7 @@ def record():
         elif not silent and not snd_started:
             snd_started = True
 
-        if snd_started and num_silent > 10* time_interval:
+        if snd_started and num_silent > 12* time_interval:
             break
 
     sample_width = p.get_sample_size(FORMAT)
@@ -131,7 +132,7 @@ def record_to_file(path):
     wf.close()
 
 if __name__ == '__main__':
-    print("Please start speaking into the microphone:")
+    print("Please start speaking about the topic now:")
     record_to_file('demo.wav')
     print("Done! - result written to demo.wav")
     print("You may now run the command: python videotranscript.py")
