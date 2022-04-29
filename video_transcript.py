@@ -59,7 +59,11 @@ for i in range(0, total_duration):
 		audio = r.record(source, offset=i*60, duration=60)
 	# f = open("transcription.txt", "a")
 	f = open(text_file_name, "a")
-	f.write(r.recognize_google(audio))
+	# f.write(r.recognize_google(audio))
+	try:
+		f.write(r.recognize_google(audio))
+	except:
+		pass
 	f.write(" ")
 f.close()
 
