@@ -288,13 +288,33 @@ plt.savefig("FillerWords.pdf")
 
 
 
+longWordsOutput = dict()
+for i in range(len(data)):
+	if data[i] not in longWordsOutput and len(data[i]) > 5:
+		longWordsOutput[data[i]] = 1
+	elif len(data[i]) > 5:
+		longWordsOutput[data[i]] += 1
 
+# list(longWordsOutput.keys())
+# list(longWordsOutput.values())
+words_long_key =  sorted(longWordsOutput, key=longWordsOutput.get, reverse=True)[:10]
+words_long_vals = [longWordsOutput[words_key] for words_key in words_long_key]
+
+fig = plt.figure(4, figsize = (10, 5))
+plt.bar(words_long_key, words_long_vals, color ='purple',
+        width = 0.4)
+
+plt.xlabel("Long words spoken")
+plt.ylabel("No. of times spoken")
+plt.title("Long words used in Speech:")
+# plt.show()
+plt.savefig("LongWords.pdf")
 
 
 
 
 from PyPDF2 import PdfFileMerger
-pdfs = ['CommonWords.pdf','UserAmplitudePlot.pdf', 'SentimentPlot.pdf', 'FillerWords.pdf', output_filename]
+pdfs = ['CommonWords.pdf', 'LongWords.pdf', 'UserAmplitudePlot.pdf', 'SentimentPlot.pdf', 'FillerWords.pdf', output_filename]
 merger = PdfFileMerger()
 for pdf in pdfs:
 	merger.append(pdf)
