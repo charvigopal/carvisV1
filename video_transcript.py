@@ -290,6 +290,24 @@ plt.savefig("CommonWords.pdf")
 # for key in words_key: 
 # 	= output
 
+common_transcription = fitz.open(output_filename)
+for each_page in common_transcription:
+	for common_word in words_keys:
+		#Search
+		word_instances = each_page.searchFor(common_word)
+		# print("word instances", word_instances)
+		#Highlight
+		for inst in word_instances:
+
+			highlight = each_page.addHighlightAnnot(inst)
+			highlight.setColors(stroke = fitz.utils.getColor('yellow'))
+			highlight.setColors({"stroke": (1, 0.6, 0)})
+			# highlight.setColors(colors= fitz.utils.getColor('red'))
+			highlight.update()
+
+common_transcription.save('CommonWordsTranscription.pdf')
+
+
 
 
 
@@ -344,7 +362,7 @@ longWordsOutput = dict()
 for i in range(len(data)):
 	if data[i] not in longWordsOutput and len(data[i]) > 5:
 		longWordsOutput[data[i]] = 1
-	elif len(data[i]) > 5:
+	elif len(data[i]) >= 10:
 		longWordsOutput[data[i]] += 1
 
 # list(longWordsOutput.keys())
@@ -356,9 +374,9 @@ fig = plt.figure(4, figsize = (10, 5))
 plt.bar(words_long_key, words_long_vals, color ='purple',
 		width = 0.4)
 
-plt.xlabel("Long words spoken")
+plt.xlabel("Key words spoken")
 plt.ylabel("No. of times spoken")
-plt.title("Long words used in Speech:")
+plt.title("Key words used in Speech:")
 # plt.show()
 plt.savefig("LongWords.pdf")
 
@@ -405,7 +423,7 @@ print("List of synonyms", list_of_synonyms)
 
 
 from PyPDF2 import PdfFileMerger
-pdfs = [ 'CommonWords.pdf', 'LongWords.pdf', 'LongWordsTranscription.pdf','UserAmplitudePlot.pdf', 'SentimentPlot.pdf', 'FillerWords.pdf','FillerWordsTranscription.pdf', output_filename]
+pdfs = [ 'CommonWords.pdf', 'CommonWordsTranscription.pdf','LongWords.pdf', 'LongWordsTranscription.pdf','UserAmplitudePlot.pdf', 'SentimentPlot.pdf', 'FillerWords.pdf','FillerWordsTranscription.pdf', output_filename]
 merger = PdfFileMerger()
 for pdf in pdfs:
 	merger.append(pdf)
