@@ -15,6 +15,7 @@ import gtts
 from playsound import playsound
 import fitz
 from nltk.corpus import wordnet
+from fpdf import FPDF
 
 now = datetime.now()
 new_now = now.strftime("%H%M%S")
@@ -44,7 +45,7 @@ print(r_indices_list[3])
 
 print("---------------------------------")
 
-transcribed_audio_file_name = "demo.wav"
+transcribed_audio_file_name = "charvistressedaboutbrazildata.wav"
 text_file_name = "transcription"+str(new_now)+".txt"
 # text_file_name = "transcription" + str(111652) + ".txt"
 # zoom_video_file_name = "zoom_call.mp4"
@@ -404,16 +405,34 @@ long_transcription.save('LongWordsTranscription.pdf')
 
 
 
+
 list_of_synonyms = []
+synonyms_dict = dict()
 for each_word in words_long_key:
-	synonyms = [each_word+":"]
+	synonyms = []
 	if len(each_word) > 8:
 		for syn in wordnet.synsets(each_word):
 			for i in syn.lemmas():
-			    synonyms.append(i.name())
+				if i.name() != each_word:
+					synonyms.append(i.name())
+		synonyms_dict[each_word] = set(synonyms)
+		# list_of_synonyms.append(set(synonyms))
 
-		list_of_synonyms.append(synonyms)
-print("List of synonyms", list_of_synonyms)
+# print("List of synonyms", list_of_synonyms)
+# print("Synonyms Dictionary", synonyms_dict)
+
+synonyms_pdf = FPDF()
+synonyms_pdf.add_page()
+synonyms_pdf.set_font("Times", size = 12)
+synonyms_pdf.cell(200, 10, txt = "Synonyms to the frequently used keywords:", ln = 1, align = 'L')
+line_count = 1
+for each_word in synonyms_dict:
+	line_count += 1
+	new_txt = str(each_word) + ": " + str(synonyms_dict[each_word])
+	synonyms_pdf.cell(200, 10, txt = new_txt, ln = line_count, align = 'L')
+synonyms_pdf.output('Synonyms.pdf')
+
+
 
 
 
@@ -423,7 +442,7 @@ print("List of synonyms", list_of_synonyms)
 
 
 from PyPDF2 import PdfFileMerger
-pdfs = [ 'CommonWords.pdf', 'CommonWordsTranscription.pdf','LongWords.pdf', 'LongWordsTranscription.pdf','UserAmplitudePlot.pdf', 'SentimentPlot.pdf', 'FillerWords.pdf','FillerWordsTranscription.pdf', output_filename]
+pdfs = [ 'CommonWords.pdf', 'CommonWordsTranscription.pdf','LongWords.pdf', 'LongWordsTranscription.pdf', 'Synonyms.pdf', 'UserAmplitudePlot.pdf', 'SentimentPlot.pdf', 'FillerWords.pdf','FillerWordsTranscription.pdf', output_filename]
 merger = PdfFileMerger()
 for pdf in pdfs:
 	merger.append(pdf)
