@@ -45,7 +45,7 @@ print(r_indices_list[3])
 
 print("---------------------------------")
 
-transcribed_audio_file_name = "charvistressedaboutbrazildata.wav"
+transcribed_audio_file_name = "demo.wav"
 text_file_name = "transcription"+str(new_now)+".txt"
 # text_file_name = "transcription" + str(111652) + ".txt"
 # zoom_video_file_name = "zoom_call.mp4"
