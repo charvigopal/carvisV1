@@ -319,10 +319,11 @@ plt.savefig("FillerWords.pdf")
 
 
 
+filler_update_words = {' like ',' um ', ' umm ', ' totally ', ' hmm ', ' hmmm ', ' literally ', ' really ', ' uh ', ' actually ', ' so ', ' very ', ' simply ', ' slightly ', ' basically ', ' just ', ' also '}
 
 open_transcription = fitz.open(output_filename)
 for each_page in open_transcription:
-	for filler_word in filler_words:
+	for filler_word in filler_update_words:
 		#Search
 		word_instances = each_page.searchFor(filler_word)
 		# print("word instances", word_instances)
