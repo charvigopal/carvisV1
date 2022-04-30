@@ -363,6 +363,28 @@ plt.savefig("LongWords.pdf")
 
 
 
+
+
+long_transcription = fitz.open(output_filename)
+for each_page in long_transcription:
+	for long_word in words_long_key:
+		#Search
+		word_instances = each_page.searchFor(long_word)
+		# print("word instances", word_instances)
+		#Highlight
+		for inst in word_instances:
+
+			highlight = each_page.addHighlightAnnot(inst)
+			highlight.setColors(stroke = fitz.utils.getColor('yellow'))
+			# highlight.setColors(colors= fitz.utils.getColor('red'))
+			highlight.update()
+
+long_transcription.save('LongWordsTranscription.pdf')
+
+
+
+
+
 list_of_synonyms = []
 for each_word in words_long_key:
 	synonyms = [each_word+":"]
@@ -382,7 +404,7 @@ print("List of synonyms", list_of_synonyms)
 
 
 from PyPDF2 import PdfFileMerger
-pdfs = [ output_filename, 'CommonWords.pdf', 'LongWords.pdf', 'UserAmplitudePlot.pdf', 'SentimentPlot.pdf', 'FillerWords.pdf','FillerWordsTranscription.pdf']
+pdfs = [ 'CommonWords.pdf', 'LongWords.pdf', 'LongWordsTranscription.pdf','UserAmplitudePlot.pdf', 'SentimentPlot.pdf', 'FillerWords.pdf','FillerWordsTranscription.pdf', output_filename]
 merger = PdfFileMerger()
 for pdf in pdfs:
 	merger.append(pdf)
