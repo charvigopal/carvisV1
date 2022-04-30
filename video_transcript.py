@@ -44,7 +44,7 @@ print(r_indices_list[3])
 
 print("---------------------------------")
 
-transcribed_audio_file_name = "demo.wav"
+transcribed_audio_file_name = "charvistressedaboutbrazildata.wav"
 text_file_name = "transcription"+str(new_now)+".txt"
 # text_file_name = "transcription" + str(111652) + ".txt"
 # zoom_video_file_name = "zoom_call.mp4"
@@ -289,10 +289,10 @@ plt.savefig("CommonWords.pdf")
 # words_freq = dict()
 # for key in words_key: 
 # 	= output
-
+common_words_keys = [" "+x+" " for x in words_keys]
 common_transcription = fitz.open(output_filename)
 for each_page in common_transcription:
-	for common_word in words_keys:
+	for common_word in common_words_keys:
 		#Search
 		word_instances = each_page.searchFor(common_word)
 		# print("word instances", word_instances)
@@ -301,7 +301,7 @@ for each_page in common_transcription:
 
 			highlight = each_page.addHighlightAnnot(inst)
 			highlight.setColors(stroke = fitz.utils.getColor('yellow'))
-			highlight.setColors({"stroke": (1, 0.6, 0)})
+			# highlight.setColors({"stroke": (1, 0.6, 0)})
 			# highlight.setColors(colors= fitz.utils.getColor('red'))
 			highlight.update()
 
@@ -360,9 +360,9 @@ open_transcription.save('FillerWordsTranscription.pdf')
 
 longWordsOutput = dict()
 for i in range(len(data)):
-	if data[i] not in longWordsOutput and len(data[i]) >= 8:
+	if data[i] not in longWordsOutput and len(data[i]) >= 9:
 		longWordsOutput[data[i]] = 1
-	elif data[i] in longWordsOutput and len(data[i]) >= 8:
+	elif data[i] in longWordsOutput and len(data[i]) >= 9:
 		longWordsOutput[data[i]] += 1
 
 # list(longWordsOutput.keys())
@@ -394,7 +394,7 @@ for each_page in long_transcription:
 		for inst in word_instances:
 
 			highlight = each_page.addHighlightAnnot(inst)
-			highlight.setColors(stroke = fitz.utils.getColor('yellow'))
+			highlight.setColors(stroke = fitz.utils.getColor('green'))
 			# highlight.setColors(colors= fitz.utils.getColor('red'))
 			highlight.update()
 
