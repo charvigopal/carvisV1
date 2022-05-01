@@ -45,7 +45,7 @@ print(r_indices_list[3])
 
 print("---------------------------------")
 
-transcribed_audio_file_name = "demo.wav"
+transcribed_audio_file_name = "demo.wav"	
 # transcribed_audio_file_name = "charvistressedaboutbrazildata.wav"
 
 text_file_name = "transcription"+str(new_now)+".txt"
