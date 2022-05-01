@@ -517,7 +517,7 @@ text_to_pdf("Summary of the speech: \n" + summary, summary_filename)
 
 
 from PyPDF2 import PdfFileMerger
-pdfs = [ 'CommonWords.pdf', 'CommonWordsTranscription.pdf','LongWords.pdf', 'LongWordsTranscription.pdf', 'Synonyms.pdf', 'UserAmplitudePlot.pdf', 'SentimentPlot.pdf', 'FillerWords.pdf','FillerWordsTranscription.pdf', 'TranscriptionReportFile.pdf', summary_filename]
+pdfs = [ 'CommonWords.pdf', 'CommonWordsTranscription.pdf','LongWords.pdf', 'LongWordsTranscription.pdf', 'Synonyms.pdf', 'SentimentPlot.pdf', 'FillerWords.pdf','FillerWordsTranscription.pdf', 'TranscriptionReportFile.pdf', summary_filename]
 merger = PdfFileMerger()
 for pdf in pdfs:
 	merger.append(pdf)
