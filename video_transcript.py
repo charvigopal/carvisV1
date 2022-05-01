@@ -46,6 +46,8 @@ print(r_indices_list[3])
 print("---------------------------------")
 
 transcribed_audio_file_name = "demo.wav"
+# transcribed_audio_file_name = "charvistressedaboutbrazildata.wav"
+
 text_file_name = "transcription"+str(new_now)+".txt"
 # text_file_name = "transcription" + str(111652) + ".txt"
 # zoom_video_file_name = "zoom_call.mp4"
@@ -171,9 +173,7 @@ file = open(input_filename)
 text = file.read()
 file.close()
 text_to_pdf(text, output_filename)
-
-
-
+text_to_pdf("Transcription of your speech: \n" + text, "TranscriptionReportFile.pdf")
 
 
 
@@ -226,11 +226,15 @@ process_data =  [(line.strip()).split() for line in textfile]
 # data = textfile.split(',')
 data = process_data[0]
 
+# print("This is data", data)
+# print("Data type", type(data))
+
 
 text_str = ""
 for each_word in data:
 	text_str += each_word
 	text_str += " "
+
 
 import text2emotion as te
 print("Sentiment Analysis: \n")
@@ -274,7 +278,10 @@ for word in stopwords:
 		pass 
 
 words_keys = sorted(output, key=output.get, reverse=True)[:10]
-words_vals = [output[words_key] for words_key in words_keys]
+# words_vals = [output[words_key] for words_key in words_keys]
+
+words_keys = [x for x in words_keys if output[x] > 1]
+words_vals = [output[words_key] for words_key in words_keys] 
 
 fig =  plt.figure(0, figsize = (10, 5))
 
@@ -369,7 +376,8 @@ for i in range(len(data)):
 # list(longWordsOutput.keys())
 # list(longWordsOutput.values())
 words_long_key =  sorted(longWordsOutput, key=longWordsOutput.get, reverse=True)[:10]
-words_long_vals = [longWordsOutput[words_key] for words_key in words_long_key]
+words_long_key = [x for x in words_long_key if longWordsOutput[x] > 1]
+words_long_vals = [longWordsOutput[x] for x in words_long_key]
 
 fig = plt.figure(4, figsize = (10, 5))
 plt.bar(words_long_key, words_long_vals, color ='purple',
@@ -423,8 +431,9 @@ for each_word in words_long_key:
 
 synonyms_pdf = FPDF()
 synonyms_pdf.add_page()
-synonyms_pdf.set_font("Times", size = 12)
+synonyms_pdf.set_font("Times",  style = 'B',  size = 12)
 synonyms_pdf.cell(200, 10, txt = "Synonyms to the frequently used keywords:", ln = 1, align = 'L')
+synonyms_pdf.set_font("Times",  size = 12)
 line_count = 1
 for each_word in synonyms_dict:
 	line_count += 1
@@ -436,13 +445,79 @@ synonyms_pdf.output('Synonyms.pdf')
 
 
 
+# print("This is text", text_str)
+# print("Text type", type(text_str))
+
+from nltk.corpus import stopwords
+from nltk.tokenize import word_tokenize, sent_tokenize
+
+# Input text - to summarize
+text = text_str
+
+# Tokenizing the text
+stopWords = set(stopwords.words("english"))
+words = word_tokenize(text)
+
+# Creating a frequency table to keep the
+# score of each word
+
+freqTable = dict()
+for word in words:
+	word = word.lower()
+	if word in stopWords:
+		continue
+	if word in freqTable:
+		freqTable[word] += 1
+	else:
+		freqTable[word] = 1
+
+# Creating a dictionary to keep the score
+# of each sentence
+sentences = sent_tokenize(text)
+sentenceValue = dict()
+
+for sentence in sentences:
+	for word, freq in freqTable.items():
+		if word in sentence.lower():
+			if sentence in sentenceValue:
+				sentenceValue[sentence] += freq
+			else:
+				sentenceValue[sentence] = freq
+
+
+
+sumValues = 0
+for sentence in sentenceValue:
+	sumValues += sentenceValue[sentence]
+
+# Average value of a sentence from the original text
+
+average = int(sumValues / len(sentenceValue))
+
+# Storing sentences into our summary.
+summary = ''
+for sentence in sentences:
+	if (sentence in sentenceValue) and (sentenceValue[sentence] > (1.4 * average)):
+		summary += " " + sentence
+
+
+# summary_file = open("summary.txt", "w")
+ 
+# #write string to file
+# summary_file.write(summary)
+ 
+# #close file
+# summary_file.close()
+
+summary_filename = 'SummaryReport' + new_now + '.pdf'
+text_to_pdf("Summary of the speech: \n" + summary, summary_filename)
 
 
 
 
 
 from PyPDF2 import PdfFileMerger
-pdfs = [ 'CommonWords.pdf', 'CommonWordsTranscription.pdf','LongWords.pdf', 'LongWordsTranscription.pdf', 'Synonyms.pdf', 'UserAmplitudePlot.pdf', 'SentimentPlot.pdf', 'FillerWords.pdf','FillerWordsTranscription.pdf', output_filename]
+pdfs = [ 'CommonWords.pdf', 'CommonWordsTranscription.pdf','LongWords.pdf', 'LongWordsTranscription.pdf', 'Synonyms.pdf', 'UserAmplitudePlot.pdf', 'SentimentPlot.pdf', 'FillerWords.pdf','FillerWordsTranscription.pdf', 'TranscriptionReportFile.pdf', summary_filename]
 merger = PdfFileMerger()
 for pdf in pdfs:
 	merger.append(pdf)
