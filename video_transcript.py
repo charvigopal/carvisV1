@@ -165,6 +165,8 @@ def text_to_pdf(text, filename):
 	pdf.output(filename, 'F')
 
 
+import textstat
+
 # input_filename = 'transcription.txt'
 input_filename = text_file_name
 output_filename = 'TranscriptionReport' + new_now + '.pdf'
@@ -174,6 +176,7 @@ text = file.read()
 file.close()
 text_to_pdf(text, output_filename)
 text_to_pdf("Transcription of your speech: \n" + text, "TranscriptionReportFile.pdf")
+# text_to_pdf("Transcription of your speech: \n + Your readability score is " + str(textstat.flesch_reading_ease(text)) + "\n"+ text, "TranscriptionReportFile.pdf")
 
 
 
@@ -250,13 +253,18 @@ plt.title("Sentiment plot of your Presentation")
 plt.savefig("SentimentPlot.pdf")
 
 
+
+
 # import textstat 
-# print("Dale Chall readability score", textstat.dale_chall_readability_score(data))
+# # print("Dale Chall readability score", textstat.dale_chall_readability_score(text_str))
 
+# from PIL import Image
 
+# image_1 = Image.open(r'readability.jpg')
 
-
-
+# im_1 = image_1.convert('RGB')
+# # im_1.resize((10, 5))
+# im_1.save(r'ReadabilityChart.pdf')
 
 
 
@@ -270,12 +278,19 @@ for i in range(len(data)):
 	else:
 		output[data[i]] += 1
 
+pronouns = {'I', 'we', 'you', 'yours', 'him', 'he', 'his', 'she', 'her', 'hers', 'We', 'You', 'it', 'they', 'them', 'theirs', 'us', 'mine', 'our', 'ours', 'us', 'myself', 'herself', 'yourself', 'ourselves'}
 stopwords = ['with', 'has', 'by', 'to', 'the', 'a', 'from', 'on', 'that', 'been', 'do', 'and', 'is', 'for', 'of', 'it', 'if', 'in', 'which', 'but', 'are', 'have', 'not', 'it\'s', 'I\'m', 'am', 'at', 'so', 'will', 'be', 'an', 'that', 'was', 'this', 'can', 'we', 'you', 'I']
 for word in stopwords:
 	try:
 		del output[word]
 	except:
 		pass 
+
+for word in pronouns:
+	try:
+		del output[word]
+	except:
+		pass
 
 words_keys = sorted(output, key=output.get, reverse=True)[:10]
 # words_vals = [output[words_key] for words_key in words_keys]
@@ -293,6 +308,57 @@ plt.ylabel("No. of times spoken")
 plt.title("Words commonly used in Speech:")
 plt.savefig("CommonWords.pdf")
 # # plt.show()
+
+
+pronounsOutput = dict()
+for i in range(len(data)):
+	if data[i] in pronouns and data[i] not in pronounsOutput:
+		pronounsOutput[data[i]] = 1
+	elif data[i] in pronouns and data[i] in pronounsOutput:
+		pronounsOutput[data[i]] += 1
+
+words_pronoun_keys = sorted(pronounsOutput, key = pronounsOutput.get, reverse=True)[:10]
+words_pronoun_vals = [pronounsOutput[x] for x in words_pronoun_keys]
+fig = plt.figure(6, figsize = (10, 5))
+plt.bar(words_pronoun_keys, words_pronoun_vals, color ='crimson',
+		width = 0.4)
+plt.xlabel("Pronouns spoken in speech")
+plt.ylabel("No. of times spoken")
+plt.title("Pronouns frequently used in Speech:")
+plt.savefig("PronounsPlot.pdf")
+
+
+
+pronoun_words_keys = [" "+x+" " for x in words_pronoun_keys]
+pronoun_transcription = fitz.open(output_filename)
+for each_page in pronoun_transcription:
+	for pronoun_word in pronoun_words_keys:
+		#Search
+		word_instances = each_page.searchFor(pronoun_word)
+		# print("word instances", word_instances)
+		#Highlight
+		for inst in word_instances:
+
+			highlight = each_page.addHighlightAnnot(inst)
+			highlight.setColors(stroke = fitz.utils.getColor('yellow'))
+			# highlight.setColors({"stroke": (1, 0.6, 0)})
+			# highlight.setColors(colors= fitz.utils.getColor('red'))
+			highlight.update()
+
+pronoun_transcription.save('PronounsTranscription.pdf')
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 # words_freq = dict()
 # for key in words_key: 
@@ -388,6 +454,7 @@ plt.ylabel("No. of times spoken")
 plt.title("Key words used in Speech:")
 # plt.show()
 plt.savefig("LongWords.pdf")
+
 
 
 
@@ -517,7 +584,7 @@ text_to_pdf("Summary of the speech: \n" + summary, summary_filename)
 
 
 from PyPDF2 import PdfFileMerger
-pdfs = [ 'CommonWords.pdf', 'CommonWordsTranscription.pdf','LongWords.pdf', 'LongWordsTranscription.pdf', 'Synonyms.pdf', 'SentimentPlot.pdf', 'FillerWords.pdf','FillerWordsTranscription.pdf', 'TranscriptionReportFile.pdf', summary_filename]
+pdfs = [ 'FillerWords.pdf', 'FillerWordsTranscription.pdf','LongWords.pdf', 'LongWordsTranscription.pdf', 'Synonyms.pdf', 'SentimentPlot.pdf', 'PronounsPlot.pdf', 'PronounsTranscription.pdf' ,'CommonWords.pdf', 'CommonWordsTranscription.pdf', 'TranscriptionReportFile.pdf', summary_filename]
 merger = PdfFileMerger()
 for pdf in pdfs:
 	merger.append(pdf)
