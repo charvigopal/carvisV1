@@ -16,6 +16,10 @@ from playsound import playsound
 import fitz
 from nltk.corpus import wordnet
 from fpdf import FPDF
+import audioread
+
+# import mutagen
+# from mutagen.wave import WAVE
 
 now = datetime.now()
 new_now = now.strftime("%H%M%S")
@@ -47,6 +51,19 @@ print("---------------------------------")
 
 transcribed_audio_file_name = "demo.wav"	
 # transcribed_audio_file_name = "charvistressedaboutbrazildata.wav"
+def audio_duration(length):
+	return length/60
+# audio_wave = Wave(transcribed_audio_file_name)
+# audio_info = audio_wave.info 
+# audio_length = float(audio_info.length)
+# no_of_minutes = audio_duration(audio_length)
+
+with audioread.audio_open(transcribed_audio_file_name) as f:
+	totalsec = f.duration
+
+no_of_minutes = audio_duration(totalsec)
+
+
 
 text_file_name = "transcription"+str(new_now)+".txt"
 # text_file_name = "transcription" + str(111652) + ".txt"
@@ -74,7 +91,6 @@ f.close()
 
 # sample_rate, data = wavfile.read('transcribed_speech.wav')
 # time_duration = len(data)/sample_rate
-
 
 
 
@@ -303,9 +319,9 @@ fig =  plt.figure(0, figsize = (10, 5))
 plt.bar(words_keys, words_vals, color ='maroon',
 		width = 0.4)
 
-plt.xlabel("Common spoken words")
+plt.xlabel("Frequently spoken words")
 plt.ylabel("No. of times spoken")
-plt.title("Words commonly used in Speech:")
+plt.title("Words Frequently used in Speech:")
 plt.savefig("CommonWords.pdf")
 # # plt.show()
 
@@ -441,7 +457,7 @@ for i in range(len(data)):
 
 # list(longWordsOutput.keys())
 # list(longWordsOutput.values())
-words_long_key =  sorted(longWordsOutput, key=longWordsOutput.get, reverse=True)[:10]
+words_long_key =  sorted(longWordsOutput, key=longWordsOutput.get, reverse=True)[:7]
 words_long_key = [x for x in words_long_key if longWordsOutput[x] > 1]
 words_long_vals = [longWordsOutput[x] for x in words_long_key]
 
@@ -499,7 +515,7 @@ for each_word in words_long_key:
 synonyms_pdf = FPDF()
 synonyms_pdf.add_page()
 synonyms_pdf.set_font("Times",  style = 'B',  size = 12)
-synonyms_pdf.cell(200, 10, txt = "Synonyms to the frequently used keywords:", ln = 1, align = 'L')
+synonyms_pdf.cell(200, 10, txt = "Synonyms to the frequently used keywords", ln = 1, align = 'C')
 synonyms_pdf.set_font("Times",  size = 12)
 line_count = 1
 for each_word in synonyms_dict:
@@ -509,6 +525,83 @@ for each_word in synonyms_dict:
 synonyms_pdf.output('Synonyms.pdf')
 
 
+intro_pdf = FPDF()
+intro_pdf.add_page()
+intro_pdf.set_font("Times", style = 'B', size = 16)
+intro_pdf.set_text_color(0,0,255)    
+intro_pdf.cell(200, 10, txt ="Welcome to your Carvis Report!", ln = 1, align = 'C')
+intro_pdf.set_font("Times",  size = 12)
+l1 = "Here are the insights from the audio you recorded or the recording you specified. We hope you find them "
+l2= "helpful: feel free to take notes to help you improve! First, let us look at your commonly-used "
+l3 = "filler words and where they appear in the transcript of your speech."
+l4 = "Hint: Best to use as few filler words as possible"
+l5 = "Great speaker uses only 1 filler word per minute while an average speaker uses 5 filler word per minute."
+l6 = "You spoke about " + str(sum(words_filler_vals)/ no_of_minutes) + " filler words per minute"
+intro_pdf.cell(200, 10, txt = l1, ln = 2, align = 'L')
+intro_pdf.cell(200, 10, txt = l2, ln = 3, align = 'L')
+intro_pdf.cell(200, 10, txt = l3, ln = 4, align = 'L')
+intro_pdf.cell(200, 10, txt = l4, ln = 5, align = 'L')
+intro_pdf.cell(200, 10, txt = l5, ln = 6, align = 'L')
+intro_pdf.cell(200, 10, txt = l6, ln = 7, align = 'L')
+
+intro_pdf.output('CarvisIntro.pdf')
+
+# intro_text = "Welcome to your Carvis report! Here are the insights from the audio you recorded or the recording you specified. We hope you find them helpful: feel free to take notes to help you improve! First, let us look at your commonly-used filler words and where they appear in the transcript of your speech."
+
+# text_to_pdf(intro_text, "CarvisIntro.pdf")
+
+
+def text_to_pdf1(text, filename):
+	a4_width_mm = 210
+	pt_to_mm = 0.35
+	fontsize_pt = 10
+	fontsize_mm = fontsize_pt * pt_to_mm
+	margin_bottom_mm = 10
+	character_width_mm = 7 * pt_to_mm
+	width_text = a4_width_mm / character_width_mm
+
+	pdf = FPDF(orientation='P', unit='mm', format='A4')
+	pdf.set_auto_page_break(True, margin=margin_bottom_mm)
+	pdf.set_text_color(0, 0, 255)
+	pdf.add_page()
+	pdf.set_font(family='Courier', size=fontsize_pt)
+	splitted = text.split('\n')
+
+	for line in splitted:
+		lines = textwrap.wrap(line, width_text)
+		count = 0
+		if len(lines) == 0:
+			pdf.ln()
+
+		for wrap in lines:
+			pdf.cell(0, fontsize_mm, wrap, ln=1)
+
+	pdf.output(filename, 'F')
+
+
+
+
+
+
+key1 = "Next, let us look at some of the frequently-occuring keywords in your speech and where they appear in the transcript of your speech. " 
+key2 = "As you look at the graph of keywords, think about what each keyword represents. Is it a word that is essential to conveying the meaning of your speech? If so, it might be alright for the keyword to be repeated many times. " 
+key3 = "If you wish to reduce repetition for some of the keywords, we have listed some synonyms for the commonly-used keywords. "
+text_to_pdf1(key1 + key2 + key3, "KeyWordIntro.pdf")
+
+
+
+pronoun1 = "Next, let us take a look at your frequency of using different pronouns and where they appear in the transcript of your speech. "
+
+pronoun2 = "Look at the differences between the frequency of I or you and the frequency of we. If you are talking about a group effort and tend to say I or you more than you say we, consider using we more to create a more collaborative atmosphere. " 
+
+pronoun3 = "Now, here is your challenge: which insights can you glean from looking at your pronoun distribution below?"
+text_to_pdf1(pronoun1 + pronoun2 + pronoun3, 'PronounIntro.pdf')
+
+sentiment1 = "Finally, we can explore what our system thinks your sentiment is based on the text of your speech. What do you infer from the plot below?"
+text_to_pdf1(sentiment1, 'SentimentIntro.pdf')
+
+ending1 = "That is it for now! Please come back soon to explore insights from more of your recordings or from any Internet video recordings! Happy practicing!"
+text_to_pdf1(ending1, 'EndingIntro.pdf')
 
 
 
@@ -584,7 +677,9 @@ text_to_pdf("Summary of the speech: \n" + summary, summary_filename)
 
 
 from PyPDF2 import PdfFileMerger
-pdfs = [ 'FillerWords.pdf', 'FillerWordsTranscription.pdf','LongWords.pdf', 'LongWordsTranscription.pdf', 'Synonyms.pdf', 'SentimentPlot.pdf', 'PronounsPlot.pdf', 'PronounsTranscription.pdf' ,'CommonWords.pdf', 'CommonWordsTranscription.pdf', 'TranscriptionReportFile.pdf', summary_filename]
+pdfs = [ 'CarvisIntro.pdf','FillerWords.pdf', 'FillerWordsTranscription.pdf', 'KeyWordIntro.pdf',
+		'LongWords.pdf', 'LongWordsTranscription.pdf', 'Synonyms.pdf', 'PronounIntro.pdf' , 'PronounsPlot.pdf', 'PronounsTranscription.pdf', 
+		'SentimentIntro.pdf', 'SentimentPlot.pdf','CommonWords.pdf', 'CommonWordsTranscription.pdf', 'TranscriptionReportFile.pdf', 'EndingIntro.pdf']
 merger = PdfFileMerger()
 for pdf in pdfs:
 	merger.append(pdf)
