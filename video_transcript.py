@@ -528,7 +528,7 @@ synonyms_pdf.output('Synonyms.pdf')
 intro_pdf = FPDF()
 intro_pdf.add_page()
 intro_pdf.set_font("Times", style = 'B', size = 16)
-intro_pdf.set_text_color(0,0,255)    
+intro_pdf.set_text_color(42, 98, 213)    
 intro_pdf.cell(200, 10, txt ="Welcome to your Carvis Report!", ln = 1, align = 'C')
 intro_pdf.set_font("Times",  size = 12)
 l1 = "Here are the insights from the audio you recorded or the recording you specified. We hope you find them "
@@ -562,7 +562,7 @@ def text_to_pdf1(text, filename):
 
 	pdf = FPDF(orientation='P', unit='mm', format='A4')
 	pdf.set_auto_page_break(True, margin=margin_bottom_mm)
-	pdf.set_text_color(0, 0, 255)
+	pdf.set_text_color(42, 98, 213)
 	pdf.add_page()
 	pdf.set_font(family='Courier', size=fontsize_pt)
 	splitted = text.split('\n')
@@ -679,7 +679,7 @@ text_to_pdf("Summary of the speech: \n" + summary, summary_filename)
 from PyPDF2 import PdfFileMerger
 pdfs = [ 'CarvisIntro.pdf','FillerWords.pdf', 'FillerWordsTranscription.pdf', 'KeyWordIntro.pdf',
 		'LongWords.pdf', 'LongWordsTranscription.pdf', 'Synonyms.pdf', 'PronounIntro.pdf' , 'PronounsPlot.pdf', 'PronounsTranscription.pdf', 
-		'SentimentIntro.pdf', 'SentimentPlot.pdf','CommonWords.pdf', 'CommonWordsTranscription.pdf', 'TranscriptionReportFile.pdf', 'EndingIntro.pdf']
+		'SentimentIntro.pdf', 'SentimentPlot.pdf','CommonWords.pdf', 'CommonWordsTranscription.pdf', 'EndingIntro.pdf']
 merger = PdfFileMerger()
 for pdf in pdfs:
 	merger.append(pdf)
