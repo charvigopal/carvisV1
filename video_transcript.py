@@ -416,7 +416,7 @@ words_filler_vals = list(filler_output.values())
 
 fig =  plt.figure(2, figsize = (10, 5))
 
-plt.bar(words_filler_key, words_filler_vals, color ='#2a62d5',
+plt.bar(words_filler_key, words_filler_vals, color ='blue',
 		width = 0.4)
 
 plt.xlabel("Filler words spoken")
@@ -527,7 +527,7 @@ synonyms_pdf.output('Synonyms.pdf')
 
 intro_pdf = FPDF()
 intro_pdf.add_page()
-intro_pdf.set_font("Avenir", style = 'B', size = 16)
+intro_pdf.set_font("Times", style = 'B', size = 16)
 intro_pdf.set_text_color(42, 98, 213)    
 intro_pdf.cell(200, 10, txt ="Welcome to your Carvis Report!", ln = 1, align = 'C')
 intro_pdf.set_font("Times",  size = 12)
@@ -535,7 +535,7 @@ l1 = "Here are the insights from the audio you recorded or the recording you spe
 l2= "helpful: feel free to take notes to help you improve! First, let us look at your commonly-used "
 l3 = "filler words and where they appear in the transcript of your speech."
 l4 = "Hint: Best to use as few filler words as possible"
-l5 = "Great speaker uses only 1 filler word per minute while an average speaker uses  about 5 filler words per minute."
+l5 = "Great speaker uses only 1 filler word per minute while an average speaker uses 5 filler word per minute."
 l6 = "You spoke about " + str(sum(words_filler_vals)/ no_of_minutes) + " filler words per minute"
 intro_pdf.cell(200, 10, txt = l1, ln = 2, align = 'L')
 intro_pdf.cell(200, 10, txt = l2, ln = 3, align = 'L')
@@ -564,7 +564,7 @@ def text_to_pdf1(text, filename):
 	pdf.set_auto_page_break(True, margin=margin_bottom_mm)
 	pdf.set_text_color(42, 98, 213)
 	pdf.add_page()
-	pdf.set_font(family='Avenir', size=fontsize_pt)
+	pdf.set_font(family='Courier', size=fontsize_pt)
 	splitted = text.split('\n')
 
 	for line in splitted:
