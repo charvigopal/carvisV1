@@ -18,6 +18,23 @@ print("Hi there! Welcome to Carvis record mode!")
 tts = gtts.gTTS("Hi there! Welcome to Carvis record mode!")
 tts.save("record_mode.mp3")
 playsound("record_mode.mp3")
+prompt = "Would you like me to give you a prompt to speak about? Please type Y or N."
+tts = gtts.gTTS(prompt)
+print(prompt)
+tts.save("playsound_prompt.mp3")
+playsound("playsound_prompt.mp3")
+entry = input('in> ')
+while entry.lower() not in ["y", "n"]:
+    print(prompt)
+    entry = input('in> ')
+if entry.lower() == "n":
+    pass 
+if entry.lower() == "y":
+    prompt = "Imagine you are speaking to the mayor of your city over video call about what you like and dislike about your city."
+    print(prompt)
+    tts = gtts.gTTS(prompt)
+    tts.save("prompt.mp3")
+    playsound("prompt.mp3")
 prompt = "Please enter the time interval for the recording (in seconds): "
 print(prompt)
 tts = gtts.gTTS(prompt)
