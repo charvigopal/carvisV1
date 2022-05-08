@@ -1,3 +1,4 @@
+import subprocess
 from subprocess import Popen
 from sys import byteorder
 from array import array
@@ -160,4 +161,4 @@ if __name__ == '__main__':
     tts = gtts.gTTS(prompt)
     tts.save("prompt.mp3")
     playsound("prompt.mp3")
-    Popen('python3 video_transcript.py', shell=True) 
+    subprocess.call(['python', 'video_transcript.py']) 
