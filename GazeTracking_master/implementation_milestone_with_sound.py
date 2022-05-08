@@ -21,6 +21,7 @@ def playSound():
 
 horizontal_frequencies = {'left': 0, 'right': 0, 'center at camera': 0, 'up': 0, 'down': 0}
 total = 0
+not_looking_center_buffer = 0
 
 while True:
     # We get a new frame from the webcam
@@ -39,29 +40,32 @@ while True:
         # cv2.putText(frame, str(gaze.vertical_ratio()), (600, 120), cv2.FONT_HERSHEY_DUPLEX, 1.6, (147, 58, 31), 2)
         total += 1 
         if gaze.is_right():
-            text = "<-- "
-            cv2.putText(frame, text, (600, 60), cv2.FONT_HERSHEY_DUPLEX, 1.6, (147, 58, 31), 2)
-            Thread(target= playSound).start()
+            # text = "<-- "
+            # cv2.putText(frame, text, (600, 60), cv2.FONT_HERSHEY_DUPLEX, 1.6, (147, 58, 31), 2)
+            not_looking_center_buffer += 1
             horizontal_frequencies['right'] += 1
         if gaze.is_left():
-            text = "-->"
-            cv2.putText(frame, text, (90, 60), cv2.FONT_HERSHEY_DUPLEX, 1.6, (147, 58, 31), 2)
-            Thread(target= playSound).start()
+            # text = "-->"
+            # cv2.putText(frame, text, (90, 60), cv2.FONT_HERSHEY_DUPLEX, 1.6, (147, 58, 31), 2)
+            not_looking_center_buffer += 1
             horizontal_frequencies['left'] += 1
         if gaze.is_up():
-            text= ""
-            cv2.putText(frame, text, (400, 60), cv2.FONT_HERSHEY_DUPLEX, 1.6, (147, 58, 31), 2)
-            Thread(target= playSound).start()
+            # text= ""
+            # cv2.putText(frame, text, (400, 60), cv2.FONT_HERSHEY_DUPLEX, 1.6, (147, 58, 31), 2)
+            not_looking_center_buffer += 1
             horizontal_frequencies['up'] += 1
         if gaze.is_down():
-            text= "^"
-            cv2.putText(frame, text, (400, 60), cv2.FONT_HERSHEY_DUPLEX, 1.6, (147, 58, 31), 2)
-            Thread(target= playSound).start()
+            # text= "^"
+            # cv2.putText(frame, text, (400, 60), cv2.FONT_HERSHEY_DUPLEX, 1.6, (147, 58, 31), 2)
+            not_looking_center_buffer += 1
             horizontal_frequencies['down'] += 1
         if gaze.is_center():
             text= "looking center"
             cv2.putText(frame, text, (400, 60), cv2.FONT_HERSHEY_DUPLEX, 1.6, (147, 58, 31), 2)
+            not_looking_center_buffer = 0
             horizontal_frequencies['center at camera'] += 1
+        if not_looking_center_buffer > 50:
+            Thread(target= playSound).start()
 
     # left_pupil = gaze.pupil_left_coords()
     # right_pupil = gaze.pupil_right_coords()
