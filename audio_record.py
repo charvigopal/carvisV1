@@ -1,3 +1,4 @@
+from subprocess import Popen
 from sys import byteorder
 from array import array
 from struct import pack
@@ -9,7 +10,6 @@ import speech_recognition as sr
 import gtts
 from playsound import playsound
 
-
 THRESHOLD = 500
 CHUNK_SIZE = 1024
 FORMAT = pyaudio.paInt16
@@ -18,8 +18,11 @@ print("Hi there! Welcome to Carvis record mode!")
 tts = gtts.gTTS("Hi there! Welcome to Carvis record mode!")
 tts.save("record_mode.mp3")
 playsound("record_mode.mp3")
-print("You can talk about any topic of your choice for the time interval you pick!")
-print("Please enter the time interval for the recording (in seconds): ")
+prompt = "Please enter the time interval for the recording (in seconds): "
+print(prompt)
+tts = gtts.gTTS(prompt)
+tts.save("prompt.mp3")
+playsound("prompt.mp3")
 time_interval = float(input())
 def is_silent(snd_data):
     "Returns 'True' if below the 'silent' threshold"
@@ -103,7 +106,7 @@ def record():
         elif not silent and not snd_started:
             snd_started = True
 
-        if snd_started and num_silent > 3* time_interval:
+        if time.time() - start_time > time_interval:
             break
 
     sample_width = p.get_sample_size(FORMAT)
@@ -133,6 +136,11 @@ def record_to_file(path):
 
 if __name__ == '__main__':
     print("Please start speaking about the topic now:")
+    start_time = time.time()
     record_to_file('demo.wav')
-    print("Done! - result written to demo.wav")
-    print("You may now run the command: python videotranscript.py")
+    prompt = "I'm done recording! Let's check out your Carvis report now."
+    print(prompt)
+    tts = gtts.gTTS(prompt)
+    tts.save("prompt.mp3")
+    playsound("prompt.mp3")
+    Popen('python3 video_transcript.py', shell=True) 
