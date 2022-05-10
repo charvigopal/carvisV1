@@ -40,22 +40,22 @@ while True:
         # cv2.putText(frame, str(gaze.vertical_ratio()), (600, 120), cv2.FONT_HERSHEY_DUPLEX, 1.6, (147, 58, 31), 2)
         total += 1 
         if gaze.is_right():
-            # text = "<-- "
+            # text = str(gaze.horizontal_ratio())
             # cv2.putText(frame, text, (600, 60), cv2.FONT_HERSHEY_DUPLEX, 1.6, (147, 58, 31), 2)
             not_looking_center_buffer += 1
             horizontal_frequencies['right'] += 1
         if gaze.is_left():
-            # text = "-->"
+            # text = str(gaze.horizontal_ratio())
             # cv2.putText(frame, text, (90, 60), cv2.FONT_HERSHEY_DUPLEX, 1.6, (147, 58, 31), 2)
             not_looking_center_buffer += 1
             horizontal_frequencies['left'] += 1
         if gaze.is_up():
-            # text= ""
+            # text = str(gaze.vertical_ratio())
             # cv2.putText(frame, text, (400, 60), cv2.FONT_HERSHEY_DUPLEX, 1.6, (147, 58, 31), 2)
             not_looking_center_buffer += 1
             horizontal_frequencies['up'] += 1
         if gaze.is_down():
-            # text= "^"
+            # text= str(gaze.vertical_ratio())
             # cv2.putText(frame, text, (400, 60), cv2.FONT_HERSHEY_DUPLEX, 1.6, (147, 58, 31), 2)
             not_looking_center_buffer += 1
             horizontal_frequencies['down'] += 1
