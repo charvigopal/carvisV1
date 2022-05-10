@@ -13,14 +13,31 @@ import os
 from fake_useragent import UserAgent
 from requests.exceptions import HTTPError
 
+import gtts
+from playsound import playsound
+
+prompt = "Welcome to Presentation Mode! Here, we will get you inspired to start your presentation by generating a slide deck of free-to-use images from the Internet based on the options you give me! This mode works best if the presentation you want to make is about a visual topic. But feel free to make a presentation about any topic!"
+print(prompt)
+tts = gtts.gTTS(prompt)
+tts.save("prompt.mp3")
+playsound("prompt.mp3")
+
 
 X = Presentation()
 Layout = X.slide_layouts[0] 
 first_slide = X.slides.add_slide(Layout) # Adding first slide
-print("Enter the title of your presentation: ")
+prompt = "Enter the title of your presentation: "
+print(prompt)
+tts = gtts.gTTS(prompt)
+tts.save("prompt.mp3")
+playsound("prompt.mp3")
 input_str = str(input())
 first_slide.shapes.title.text = input_str
-print("Enter the name of presenters:")
+prompt = "Enter the name of presenters:"
+print(prompt)
+tts = gtts.gTTS(prompt)
+tts.save("prompt.mp3")
+playsound("prompt.mp3")
 author_names = str(input())
 first_slide.placeholders[1].text = "By " + author_names
 now = datetime.now()
@@ -38,8 +55,17 @@ def call_request(url) -> Union[HTTPError, dict]:
 
     return response.json()
 
-print("Enter your keywords:")
+prompt = "Enter 2-3 keywords (separated by spaces): "
+print(prompt)
+tts = gtts.gTTS(prompt)
+tts.save("prompt.mp3")
+playsound("prompt.mp3")
 keyword = str(input())
+prompt = "Creating presentation now. Please feel free to start imagining what your presentation will look like while I create a starter presentation!"
+print(prompt)
+tts = gtts.gTTS(prompt)
+tts.save("prompt.mp3")
+playsound("prompt.mp3")
 genre= keyword
 per_page=20
 page=1
@@ -90,7 +116,7 @@ for filename in glob.glob(full_directory):
 presentation_name = "new_presentation"+ str(new_now) + ".pptx"
 X.save(presentation_name)
 print("Starter presentation file successfully created!")
-os.startfile(presentation_name)
+# os.startfile(presentation_name)
 
 
 
