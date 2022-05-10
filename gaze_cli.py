@@ -4,22 +4,6 @@ import gtts
 from playsound import playsound
 # from GazeTracking_master import prototype_milestone
 
-print("Hi there! Welcome to Carvis. Let's start with Gaze Mode, to help you practice looking straight at the camera when you are speaking.")
-tts = gtts.gTTS("Hi there! Welcome to Carvis. Let's start with Gaze Mode, to help you practice looking straight at the camera when you are speaking.")
-tts.save("welcome_to_carvis.mp3")
-playsound("welcome_to_carvis.mp3")
-
-
-# entry = input('in> ')
-# while entry.lower() not in ["y", "n"]:
-#     print("Would you like to see detailed instructions again?")
-#     entry = input('in> ')
-# if entry.lower() == "y":
-#     pass 
-# if entry.lower() == "n":
-#     pass 
-
-
 prompt = "Would you like me to play sounds when you are not looking straight at the camera? Please type Y or N."
 tts = gtts.gTTS(prompt)
 print(prompt)
@@ -62,7 +46,6 @@ if entry.lower() == "n":
     tts.save("gaze_opening.mp3")
     playsound("gaze_opening.mp3")
     Popen('GazeTracking_master/implementation_milestone_without_sound.py')
-    subprocess.call(['python', 'audio_record.py']) 
-    print('Now, let\'s try Speech Mode. Please enter the following command: python3 audio_record.py')
+    print('To try a different mode, please enter the following command: python3 cli.py')
 
 

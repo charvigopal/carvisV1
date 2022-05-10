@@ -33,6 +33,7 @@ tts.save("prompt.mp3")
 playsound("prompt.mp3")
 input_str = str(input())
 first_slide.shapes.title.text = input_str
+presentation_title = input_str
 prompt = "Enter the name of presenters:"
 print(prompt)
 tts = gtts.gTTS(prompt)
@@ -113,11 +114,12 @@ for filename in glob.glob(full_directory):
 	except:
 		pass
 
-presentation_name = "new_presentation"+ str(new_now) + ".pptx"
+presentation_name = presentation_title + str(new_now) + ".pptx"
 X.save(presentation_name)
-print("Starter presentation file successfully created!")
+print("Starter presentation file successfully created! To see your starter presentation, please navigate to the Carvis folder and see the file with the following name:", presentation_name)
 # os.startfile(presentation_name)
 
+print('To try a different mode, please enter the following command: python3 cli.py')
 
 
 

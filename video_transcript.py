@@ -67,9 +67,9 @@ no_of_minutes = audio_duration(totalsec)
 
 text_file_name = "transcription"+str(new_now)+".txt"
 # text_file_name = "transcription" + str(111652) + ".txt"
-# zoom_video_file_name = "zoom_call.mp4"
-# audioclip = AudioFileClip(zoom_video_file_name)
-# audioclip.write_audiofile(transcribed_audio_file_name)
+# zoom_video_file_name = "zoom_call.mp4" # uncomment
+# audioclip = AudioFileClip(zoom_video_file_name) # uncomment
+# audioclip.write_audiofile(transcribed_audio_file_name) # uncomment
 with contextlib.closing(wave.open(transcribed_audio_file_name,'r')) as f:
 	frames = f.getnframes()
 	rate = f.getframerate()
@@ -699,8 +699,8 @@ merger.close()
 path = report_name
 webbrowser.open_new(path)
 
-
-
+print("Your Carvis report is ready! To see your report, please navigate to the Carvis folder and see the file with the following name:", report_name)
+print('To try a different mode, please enter the following command: python3 cli.py')
 
 
 
