@@ -29,7 +29,7 @@ if entry.lower() == "y":
     tts.save("gaze_opening.mp3")
     playsound("gaze_opening.mp3")
     Popen('GazeTracking_master/implementation_milestone_with_sound.py')
-    print('Now, let\'s try Speech Mode. Please enter the following command: python3 audio_record.py')
+    print('To try a different mode, please enter the following command: python3 cli.py')
 if entry.lower() == "n":
     tts = gtts.gTTS("Thanks for letting me know. I will not play a sound during the session, but I will show you a graph of where you looked afterwards.")
     print("Thanks for letting me know. I will not play a sound during the session, but I will show you a graph of where you looked afterwards.")

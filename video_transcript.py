@@ -295,7 +295,7 @@ for i in range(len(data)):
 		output[data[i]] += 1
 
 pronouns = {'I', 'we', 'you', 'yours', 'him', 'he', 'his', 'she', 'her', 'hers', 'We', 'You', 'it', 'they', 'them', 'theirs', 'us', 'mine', 'our', 'ours', 'us', 'myself', 'herself', 'yourself', 'ourselves'}
-stopwords = ['with', 'has', 'by', 'to', 'the', 'a', 'from', 'on', 'that', 'been', 'do', 'and', 'is', 'for', 'of', 'it', 'if', 'in', 'which', 'but', 'are', 'have', 'not', 'it\'s', 'I\'m', 'am', 'at', 'so', 'will', 'be', 'an', 'that', 'was', 'this', 'can', 'we', 'you', 'I']
+stopwords = ['with', 'has', 'my', 'by', 'to', 'the', 'a', 'from', 'on', 'that', 'been', 'do', 'and', 'is', 'for', 'of', 'it', 'if', 'in', 'which', 'but', 'are', 'have', 'not', 'it\'s', 'I\'m', 'am', 'at', 'so', 'will', 'be', 'an', 'that', 'was', 'this', 'can', 'we', 'you', 'I']
 for word in stopwords:
 	try:
 		del output[word]
@@ -450,9 +450,9 @@ open_transcription.save('FillerWordsTranscription.pdf')
 
 longWordsOutput = dict()
 for i in range(len(data)):
-	if data[i] not in longWordsOutput and len(data[i]) >= 9:
+	if data[i] not in longWordsOutput and len(data[i]) >= 5:
 		longWordsOutput[data[i]] = 1
-	elif data[i] in longWordsOutput and len(data[i]) >= 9:
+	elif data[i] in longWordsOutput and len(data[i]) >= 5:
 		longWordsOutput[data[i]] += 1
 
 # list(longWordsOutput.keys())
