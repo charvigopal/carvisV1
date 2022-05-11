@@ -3,11 +3,10 @@
 
 # Getting Started:
 Clone this repo
+```sh
 https://github.com/charvigopal/carvisV1.git
-
 cd carvisV1
-Install the following dependencies:
- pip install -r requirements.txt
+```sh
 
 Following are the installations you would need to run: 
 
