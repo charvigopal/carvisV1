@@ -3,6 +3,9 @@
 
 <img src= "https://github.com/charvigopal/carvisV1/blob/main/carviscover.jpg" width="900"> 
 
+### Cover explanation:
+Demonstration of our system highlighting filler words detected in Speech 
+
 # Getting Started:
 Clone this repo
 ```sh
