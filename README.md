@@ -31,7 +31,7 @@ pip install cmake
 pip install dlib  
 
 
-# OS requirements: 
+## OS requirements: 
 Supports any OS. The project was tested on Windows as well as Mac OS. Recommended Python version >= 3.7
 
 # Key functions in Carvis Breakdown:
