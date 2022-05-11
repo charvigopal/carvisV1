@@ -2,8 +2,8 @@
 
 
 # Getting Started:
-Clone this repo:
-       https://github.com/charvigopal/carvisV1.git
+Clone this repo
+https://github.com/charvigopal/carvisV1.git
 cd carvisV1
 Install the following dependencies:
  pip install -r requirements.txt
