@@ -24,7 +24,7 @@ pip install PyPDF2 \
 pip install opencv-python \ 
 conda install pyaudio \
 pip install gtts \
-pip install fitz  \
+pip install fitz \
 pip install PyMuPDF==1.18.9 \ 
 pip install textstat \
 pip install audioread \
@@ -32,8 +32,8 @@ pip install python-pptx \
 pip install fake_useragent \
 pip install youtube_dl \
 pip install pytube \
-pip install cmake  \
-pip install dlib  \
+pip install cmake \
+pip install dlib \
 
 
 ## OS requirements: 
