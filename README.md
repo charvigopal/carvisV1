@@ -4,7 +4,9 @@
 <img src= "https://github.com/charvigopal/carvisV1/blob/main/carviscover.jpg" width="900"> 
 
 ### Cover explanation:
-Demonstration of our system highlighting filler words detected in Speech 
+In the image above, we are demonstrating our system's demo of highlighting filler words detected in Speech. 
+Note that this is only audio/video was recorded and the system generates transcription as well as filler 
+word detection
 
 # Getting Started:
 Clone this repo
