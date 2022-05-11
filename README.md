@@ -1,7 +1,7 @@
-Carvis Readme File
+# Carvis
 
 
-Getting Started:
+# Getting Started:
 Clone this repo:
        https://github.com/charvigopal/carvisV1.git
 cd carvisV1
@@ -29,9 +29,10 @@ pip install cmake
 pip install dlib  
 
 
-OS requirements: Supports any OS. The project was tested on Windows as well as Mac OS. Recommended Python version >= 3.7
+#OS requirements: 
+Supports any OS. The project was tested on Windows as well as Mac OS. Recommended Python version >= 3.7
 
-Key functions in Carvis Breakdown:
+#Key functions in Carvis Breakdown:
 cli.py
 The starting point for Carvis is running: python cli.py in terminal. So this is the main file that calls which allows users to select from 3 modes: i) Gaze Mode
 ii)  Speech Mode iii) Presentation Mode. 
