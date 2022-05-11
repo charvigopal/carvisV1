@@ -1,6 +1,8 @@
 # Carvis
 
 
+<img src= "https://github.com/charvigopal/carvisV1/blob/main/carviscover.jpg",  width="900"> 
+
 # Getting Started:
 Clone this repo
 ```sh
