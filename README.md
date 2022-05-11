@@ -6,7 +6,7 @@ Clone this repo
 ```sh
 https://github.com/charvigopal/carvisV1.git
 cd carvisV1
-```sh
+```
 
 Following are the installations you would need to run: 
 
